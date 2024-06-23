@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PixController;
+use App\Http\Controllers\ContabilidadeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,6 +17,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/generate-pix', [PixController::class, 'generate'])->name('generate-pix');
     Route::get('/dashboard/qr-code/{id}', [PixController::class, 'qrcode'])->name('pix.qrcode');
 
+    Route::get('/dashboard/contabilidade', [ContabilidadeController::class, 'view'])->name('contabilidade.view');
+    Route::post('/contabilidade', [ContabilidadeController::class, 'store'])->name('contabilidade.store');
 });
 
 require __DIR__.'/auth.php';
