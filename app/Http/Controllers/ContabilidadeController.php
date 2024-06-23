@@ -8,7 +8,7 @@ use App\Models\Transacao;
 class ContabilidadeController extends Controller
 {
     public function view(){
-        $historico = Transacao::orderBy('created_at', 'desc')->get();
+        $historico = Transacao::orderBy('created_at', 'desc')->paginate(25);
         $saldoAtual = Transacao::sum('valor');
 
         return view('contabilidade', compact('historico', 'saldoAtual'));
