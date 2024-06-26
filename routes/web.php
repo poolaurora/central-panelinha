@@ -3,7 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PixController;
 use App\Http\Controllers\ContabilidadeController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\EmailAccountController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('dashboard');
@@ -19,6 +22,12 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard/contabilidade', [ContabilidadeController::class, 'view'])->name('contabilidade.view');
     Route::post('/contabilidade', [ContabilidadeController::class, 'store'])->name('contabilidade.store');
+
+    Route::get('/dashboard/faturas', [InvoiceController::class, 'view'])->name('faturas.view');
+
+    Route::get('/dashboard/email', [EmailAccountController::class, 'create'])->name('email.view');
+    Route::post('/dashboard/email/create', [EmailAccountController::class, 'store'])->name('email.store');
+
 });
 
 require __DIR__.'/auth.php';
