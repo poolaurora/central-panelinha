@@ -67,23 +67,23 @@ class CheckEmails extends Command
 
             foreach ($messages as $message) {
                 $from = $message->getFrom()[0]->mail;
-                $subject = $message->getSubject();
-
+                $subject = str_replace('_', ' ', $message->getSubject());
+            
                 // Formatar mensagem do webhook
                 $content = "Você recebeu um novo e-mail\n";
                 $content .= "E-mail do remetente: {$from}\n";
                 $content .= "E-mail destinatário: {$account->email}\n";
                 $content .= "Assunto: {$subject}\n";
                 $content .= "------------------------------";
-
+            
                 // Enviar mensagem ao Discord
                 Http::post(env('DISCORD_WEBHOOK_URL'), [
                     'content' => $content
                 ]);
-
+            
                 // Marcar e-mail como lido
                 $message->setFlag('Seen');
-            }
+            }            
         } catch (\Exception $e) {
             // Tratar erro se necessário
         }

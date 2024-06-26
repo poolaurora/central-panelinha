@@ -17,7 +17,7 @@
                     <span class="text-gray-300 font-bold text-2xl">Contabilidade</span>
                 </a>
                 <a href="{{ route('email.view') }}" class="p-4 m-2 bg-gray-800 flex w-full flex-col text-center rounded-lg cursor-pointer">
-                    <i class="fa-solid fa-paste text-gray-300 text-8xl p-4"></i>
+                    <i class="fa-solid fa-envelope text-gray-300 text-8xl p-4"></i>
                     <span class="text-gray-300 font-bold text-2xl">Email Corporativo</span>
                 </a>
                 <a href="{{ route('faturas.view') }}" class="p-4 m-2 bg-gray-800 flex w-full flex-col text-center rounded-lg cursor-pointer">

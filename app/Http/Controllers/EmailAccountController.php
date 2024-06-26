@@ -10,7 +10,10 @@ class EmailAccountController extends Controller
 
     public function create()
     {
-        return view('email');
+
+        $emailAccounts = EmailAccount::all();
+
+        return view('email', compact('emailAccounts'));
     }
 
     public function store(Request $request)
@@ -29,9 +32,12 @@ class EmailAccountController extends Controller
         return redirect()->route('email.view')->with('success', 'Conta de e-mail adicionada com sucesso.');
     }
 
-    public function destroy(EmailAccount $emailAccount)
+    public function destroy($id)
     {
-        $emailAccount->delete();
-        return redirect()->route('email_accounts.index')->with('success', 'Conta de e-mail removida com sucesso.');
+        $email = EmailAccount::find($id);
+
+        $email->delete();
+
+        return redirect()->route('email.view')->with('success', 'Conta de e-mail excluída com sucesso.');
     }
 }

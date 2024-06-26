@@ -27,6 +27,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard/email', [EmailAccountController::class, 'create'])->name('email.view');
     Route::post('/dashboard/email/create', [EmailAccountController::class, 'store'])->name('email.store');
+    Route::delete('/dashboard/email/destroy/{id}', [EmailAccountController::class, 'destroy'])->name('email.destroy');
+
 
 });
 
