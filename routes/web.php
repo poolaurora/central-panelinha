@@ -19,6 +19,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/pix', [PixController::class, 'view'])->name('pix.view');
     Route::post('/generate-pix', [PixController::class, 'generate'])->name('generate-pix');
     Route::get('/dashboard/qr-code/{id}', [PixController::class, 'qrcode'])->name('pix.qrcode');
+    Route::post('/create-pix', [PixController::class, 'store'])->name('create-pix');
+
 
     Route::get('/dashboard/contabilidade', [ContabilidadeController::class, 'view'])->name('contabilidade.view');
     Route::post('/contabilidade', [ContabilidadeController::class, 'store'])->name('contabilidade.store');

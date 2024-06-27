@@ -5,13 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Models\Pix;
+use App\Models\PixSecret;
 
 
 class PixController extends Controller
 {
     public function view(){
 
-        return view('pix');
+        $pix = PixSecret::all();
+
+        return view('pix', compact('pix'));
     }
 
     public function generate(Request $request)
@@ -19,21 +22,24 @@ class PixController extends Controller
         // Validação dos dados
         $request->validate([
             'amount' => 'required',
+            'gateway' => 'required',
         ]);
 
         // Obter o valor e converter para centavos
         $amount = str_replace(['.', ','], ['', '.'], $request->input('amount'));
         $amountInCents = intval(floatval($amount) * 100);
 
-        $appId = env('APP_ID_SQALA');
-        $appSecret = env('APP_SECRET');
+        $secret = PixSecret::find($request->input('gateway'));
+
+        $appId = $secret->appId;
+        $appSecret = $secret->app_secret;
         $base64Credentials = base64_encode("{$appId}:{$appSecret}");
         
         $response = Http::withHeaders([
             'Authorization' => 'Basic ' . $base64Credentials,
             'Content-Type' => 'application/json'
         ])->post('https://api.sqala.tech/core/v1/access-tokens', [
-            'refreshToken' => env('REFRESH_TOKEN')
+            'refreshToken' => $secret->refresh_token
         ]);
         
         $data = $response->json();
@@ -69,6 +75,27 @@ class PixController extends Controller
         $pix = Pix::find($id);
 
         return view('qrcode', compact('pix'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nome' => 'required|string',
+            'appId' => 'required|string',
+            'app_secret' => 'required|string',
+            'refresh_token' => 'required|string',
+        ]);
+
+        $pixSecret = new PixSecret([
+            'nome' => $request->get('nome'),
+            'appId' => $request->get('appId'),
+            'app_secret' => $request->get('app_secret'),
+            'refresh_token' => $request->get('refresh_token'),
+        ]);
+
+        $pixSecret->save();
+
+        return redirect()->route('pix.view')->with('success', 'PixSecret created successfully.');
     }
 
 }
