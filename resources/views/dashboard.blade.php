@@ -16,6 +16,10 @@
                     <i class="fa-solid fa-wallet text-gray-300 text-8xl p-4"></i>
                     <span class="text-gray-300 font-bold text-2xl">Contabilidade</span>
                 </a>
+                <a href="{{ route('contabilidade.ads.view') }}" class="p-4 m-2 bg-gray-800 flex w-full flex-col text-center rounded-lg cursor-pointer">
+                    <i class="fa-brands fa-facebook text-gray-300 text-8xl p-4"></i>
+                    <span class="text-gray-300 font-bold text-2xl">Contabilidade Ads</span>
+                </a>
                 <a href="{{ route('email.view') }}" class="p-4 m-2 bg-gray-800 flex w-full flex-col text-center rounded-lg cursor-pointer">
                     <i class="fa-solid fa-envelope text-gray-300 text-8xl p-4"></i>
                     <span class="text-gray-300 font-bold text-2xl">Email Corporativo</span>

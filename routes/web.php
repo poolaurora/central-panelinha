@@ -26,6 +26,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/contabilidade', [ContabilidadeController::class, 'view'])->name('contabilidade.view');
     Route::post('/contabilidade', [ContabilidadeController::class, 'store'])->name('contabilidade.store');
 
+    Route::get('/dashboard/contabilidade/ads', [ContabilidadeController::class, 'viewads'])->name('contabilidade.ads.view');
+    Route::post('/contabilidade/ads', [ContabilidadeController::class, 'storeAds'])->name('contabilidade.ads.store');
+
     Route::get('/dashboard/email', [EmailAccountController::class, 'create'])->name('email.view');
     Route::post('/dashboard/email/create', [EmailAccountController::class, 'store'])->name('email.store');
     Route::delete('/dashboard/email/destroy/{id}', [EmailAccountController::class, 'destroy'])->name('email.destroy');
