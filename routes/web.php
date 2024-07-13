@@ -6,6 +6,7 @@ use App\Http\Controllers\ContabilidadeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\EmailAccountController;
 use App\Http\Controllers\PaymentsController;
+use App\Http\Controllers\CnpjController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -36,6 +37,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/payments', [PaymentsController::class, 'view'])->name('payments.view');
     Route::post('/dashboard/payments/create', [PaymentsController::class, 'generatePaymentLink'])->name('payments.create');
     Route::post('/dashboard/company/store', [PaymentsController::class, 'store'])->name('payments.store');
+
+    Route::get('/dashboard/cnpj', [CnpjController::class, 'index'])->name('cnpj.index');
+    Route::get('/dashboard/cnpj/consulta', [CnpjController::class, 'view'])->name('cnpj.consulta.cnpj');
+    Route::post('/import-excel', [CnpjController::class, 'importExcel'])->name('cnpj.import.excel');
+    Route::post('/clear-cnpjs', [CnpjController::class, 'clearCnpjs'])->name('cnpj.clear');
+
 
 });
 
