@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Imports\CnpjImport;
 use App\Models\Cnpj;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Log;
 
 class CnpjController extends Controller
 {
@@ -22,8 +23,8 @@ class CnpjController extends Controller
     public function importExcel(Request $request)
     {
          // Valida o arquivo
-         $request->validate([
-            'excel_file' => 'required|file|mimes:xlsx,xls',
+        $request->validate([
+            'excel_file' => 'required|file',
         ]);
 
         try {
