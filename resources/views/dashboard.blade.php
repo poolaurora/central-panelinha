@@ -33,6 +33,11 @@
                     <i class="fa-solid fa-building text-gray-300 text-8xl p-4"></i>
                     <span class="text-gray-300 font-bold text-2xl">Consultar CNPJ</span>
                 </a>
+
+                <a href="{{ route('pdf.index') }}" class="p-4 m-2 bg-gray-800 flex w-full flex-col text-center rounded-lg cursor-pointer">
+                    <i class="fa-solid fa-file text-gray-300 text-8xl p-4"></i>
+                    <span class="text-gray-300 font-bold text-2xl">PDF`S</span>
+                </a>
             </div>
         </div>
     </div>

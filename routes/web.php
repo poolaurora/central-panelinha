@@ -43,6 +43,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/import-excel', [CnpjController::class, 'importExcel'])->name('cnpj.import.excel');
     Route::post('/clear-cnpjs', [CnpjController::class, 'clearCnpjs'])->name('cnpj.clear');
 
+    Route::get('/view/fatura', [InvoiceController::class, 'view'])->name('faturas.view');
+    Route::get('/dashboard/pdf', [InvoiceController::class, 'index'])->name('pdf.index');
+    Route::get('/dashboard/pdf/extrato', [InvoiceController::class, 'indexExtrato'])->name('pdf.extrato');
+    Route::post('/dashboard/pdf/extrato/gerar/santander', [InvoiceController::class, 'generate'])->name('pdf.santander.gerar');
+
+
 
 });
 
