@@ -21,13 +21,22 @@ class CnpjController extends Controller
 
     public function importExcel(Request $request)
     {
-        $request->validate([
-            'excel_file' => 'required|mimes:xlsx,xls'
+         // Valida o arquivo
+         $request->validate([
+            'excel_file' => 'required|file|mimes:xlsx,xls',
         ]);
 
-        Excel::import(new CnpjImport, $request->file('excel_file'));
+        try {
+            Log::info('Iniciando importação do arquivo: ' . $request->file('excel_file')->getClientOriginalName());
+            Excel::import(new CnpjImport, $request->file('excel_file'));
+            Log::info('Importação concluída com sucesso.');
 
-        return back()->with('success', 'Arquivo importado com sucesso!');
+            return back()->with('success', 'CNPJs importados com sucesso.');
+        } catch (\Exception $e) {
+            Log::error('Erro ao importar arquivo Excel: ' . $e->getMessage());
+
+            return back()->with('error', 'Ocorreu um erro ao importar o arquivo Excel.');
+        }
     }
 
     public function clearCnpjs(Request $request)
