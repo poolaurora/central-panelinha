@@ -77,7 +77,7 @@ private function gerarTransacoes($periodo, $min_transacoes, $saldo_inicial, $fat
 
     // Calcular a faixa de 20 a 30% do faturamento
     $min_faturamento = $faturamento * 2.0;
-    $max_faturamento = $faturamento * 2.0;
+    $max_faturamento = $faturamento * 3.0;
     $faturamento_distribuir = rand($min_faturamento, $max_faturamento);
 
     // Gerar transações e calcular saldo inicial
