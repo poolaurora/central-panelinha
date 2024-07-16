@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard/cnpj', [CnpjController::class, 'index'])->name('cnpj.index');
     Route::get('/dashboard/cnpj/consulta', [CnpjController::class, 'view'])->name('cnpj.consulta.cnpj');
-    Route::post('/import-excel', [CnpjController::class, 'importExcel'])->name('cnpj.import.excel');
+    Route::post('/import-excel', [CnpjController::class, 'import'])->name('cnpj.import.excel');
     Route::post('/clear-cnpjs', [CnpjController::class, 'clearCnpjs'])->name('cnpj.clear');
 
     Route::get('/view/fatura', [InvoiceController::class, 'view'])->name('faturas.view');
