@@ -20,23 +20,33 @@ class CnpjController extends Controller
         return view('cnpj.consulta-cnpj');
     }
 
-    public function importExcel(Request $request)
+    public function import(Request $request)
     {
-         // Valida o arquivo
+        Log::info('Método import chamado.');
+
+        // Valida o arquivo
         $request->validate([
-            'excel_file' => 'required|file',
+            'excel_file' => 'required|file|mimes:xlsx,xls',
         ]);
 
-        try {
-            Log::info('Iniciando importação do arquivo: ' . $request->file('excel_file')->getClientOriginalName());
-            Excel::import(new CnpjImport, $request->file('excel_file'));
-            Log::info('Importação concluída com sucesso.');
+        if ($request->hasFile('excel_file')) {
+            $file = $request->file('excel_file');
+            Log::info('Arquivo recebido: ' . $file->getClientOriginalName());
+            Log::info('Caminho temporário do arquivo: ' . $file->getPathname());
 
-            return back()->with('success', 'CNPJs importados com sucesso.');
-        } catch (\Exception $e) {
-            Log::error('Erro ao importar arquivo Excel: ' . $e->getMessage());
+            try {
+                Excel::import(new CnpjImport, $file);
+                Log::info('Importação concluída com sucesso.');
 
-            return back()->with('error', 'Ocorreu um erro ao importar o arquivo Excel.');
+                return back()->with('success', 'CNPJs importados com sucesso.');
+            } catch (\Exception $e) {
+                Log::error('Erro ao importar arquivo Excel: ' . $e->getMessage());
+
+                return back()->with('error', 'Ocorreu um erro ao importar o arquivo Excel.');
+            }
+        } else {
+            Log::error('Nenhum arquivo foi recebido.');
+            return back()->with('error', 'Nenhum arquivo foi recebido.');
         }
     }
 
