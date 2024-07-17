@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use App\Models\Cnpj;
 
 
 
@@ -85,7 +86,8 @@ private function gerarTransacoes($periodo, $min_transacoes, $saldo_inicial, $fat
         $data = Carbon::createFromTimestamp(rand($start_date->timestamp, $end_date->timestamp));
         $dataFormatted = $data->format('d/m/Y');
         $dataCard = $data->format('d/m');
-        $historico = $this->gerarHistorico($dataCard);
+        $cnpj = Cnpj::where('status', 'reprovado')->inRandomOrder()->first();
+        $historico = $this->gerarHistorico($dataCard, $cnpj);
         $codigo = $historico['codigo'];
         $descricao = $historico['descricao'];
         $valor = $this->gerarValor($historico['hierarquia'], $faturamento);
@@ -159,7 +161,7 @@ private function gerarValor($hierarquia, $faturamento)
 }
 
 
-    private function gerarHistorico($dataCard)
+    private function gerarHistorico($dataCard, $cnpj)
     {
         $historicos = [
             [
@@ -171,7 +173,7 @@ private function gerarValor($hierarquia, $faturamento)
             ],
             [
                 'tipo' => 'entrada',
-                'descricao' => 'TRANSFERÊNCIA RECEBIDA',
+                'descricao' => 'TED MESMA TITULARIDADE CIP TRANSFERENCIA ENTRE CONTA',
                 'codigo' => '000000',
                 'probabilidade' => 15,
                 'hierarquia' => 5
@@ -206,7 +208,14 @@ private function gerarValor($hierarquia, $faturamento)
             ],
             [
                 'tipo' => 'entrada',
-                'descricao' => 'PIX RECEBIDO DE OUTRA INST - DIF TIT '.rand(0, 99999999999).'',
+                'descricao' => 'PIX RECEBIDO OUTRA INST - DIF TIT '.$cnpj->razao_social.'',
+                'codigo' => '000000',
+                'probabilidade' => 10,
+                'hierarquia' => 6
+            ],
+            [
+                'tipo' => 'entrada',
+                'descricao' => 'PIX RECEBIDO - DIF TIT '.rand(0, 99999999999).'',
                 'codigo' => rand(0, 999999),
                 'probabilidade' => 10,
                 'hierarquia' => 6
@@ -219,15 +228,8 @@ private function gerarValor($hierarquia, $faturamento)
                 'hierarquia' => 8
             ],
             [
-                'tipo' => 'entrada',
-                'descricao' => 'RENDIMENTOS DE INVESTIMENTOS',
-                'codigo' => '000000',
-                'probabilidade' => 10,
-                'hierarquia' => 4
-            ],
-            [
                 'tipo' => 'saida',
-                'descricao' => 'PIX ENVIADO OUTRA INST - DIF TIT VIA DIGITAL SERVICOS DE I',
+                'descricao' => 'PIX ENVIADO OUTRA INST - DIF TIT '.$cnpj->razao_social.'',
                 'codigo' => rand(0, 999999),
                 'probabilidade' => 8,
                 'hierarquia' => 4
@@ -262,7 +264,7 @@ private function gerarValor($hierarquia, $faturamento)
             ],
             [
                 'tipo' => 'saida',
-                'descricao' => 'COMPRA CARTAO DEB MC '.$dataCard.'',
+                'descricao' => 'COMPRA CARTAO DEB MC '.$dataCard.' '.$cnpj->razao_social.'',
                 'codigo' => rand(0, 999999),
                 'probabilidade' => 6,
                 'hierarquia' => 2
@@ -273,6 +275,34 @@ private function gerarValor($hierarquia, $faturamento)
                 'codigo' => rand(0, 999999),
                 'probabilidade' => 1,
                 'hierarquia' => 6
+            ],
+            [
+                'tipo' => 'saida',
+                'descricao' => 'APLICACAO AUT CONTAMAX EMPRESARIAL',
+                'codigo' => '000000',
+                'probabilidade' => 2,
+                'hierarquia' => 6
+            ],
+            [
+                'tipo' => 'saida',
+                'descricao' => 'TRANSF VALOR P/ CONTA DIF TITULAR '.rand(0, 99999999999).'',
+                'codigo' => '000000',
+                'probabilidade' => 4,
+                'hierarquia' => 6
+            ],
+            [
+                'tipo' => 'saida',
+                'descricao' => 'PIX ENVIADO OUTRA INST - DIF TIT '.$cnpj->razao_social.'',
+                'codigo' => '000000',
+                'probabilidade' => 4,
+                'hierarquia' => 4
+            ],
+            [
+                'tipo' => 'saida',
+                'descricao' => 'PGTO TITULO OUTRO BCO - '.$cnpj->razao_social.'',
+                'codigo' => '000000',
+                'probabilidade' => 2,
+                'hierarquia' => 5
             ],
         ];
 
