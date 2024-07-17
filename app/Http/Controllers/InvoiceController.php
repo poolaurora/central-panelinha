@@ -23,7 +23,7 @@ class InvoiceController extends Controller
     public function generate(Request $request)
 {
     set_time_limit(0);
-    ini_set('memory_limit', '1G');
+    ini_set('memory_limit', '-1');
 
     $request->validate([
         'banco' => 'required',
