@@ -219,7 +219,7 @@ private function gerarValor($hierarquia, $faturamento)
                 'hierarquia' => 6
             ],
             [
-                'tipo' => 'saida',
+                'tipo' => 'entrada',
                 'descricao' => 'RESGATE AUT CONTAMAX EMPRESARIAL',
                 'codigo' => '000000',
                 'probabilidade' => 2,
@@ -275,7 +275,7 @@ private function gerarValor($hierarquia, $faturamento)
                 'hierarquia' => 6
             ],
             [
-                'tipo' => 'entrada',
+                'tipo' => 'saida',
                 'descricao' => 'APLICACAO AUT CONTAMAX EMPRESARIAL',
                 'codigo' => '000000',
                 'probabilidade' => 2,
