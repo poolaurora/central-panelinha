@@ -80,6 +80,7 @@ class CheckPendingCnpjs extends Command
         // Verifica se a chave 'atividade_principal' existe e não está vazia
         if (!isset($data['atividade_principal'][0]['code'])) {
             Log::error('atividade_principal not found for CNPJ: ' . $cnpj->cnpj);
+            $cnpj->razao_social = $data['nome'];
             $cnpj->status = 'reprovado';
             $cnpj->save();
             return;
@@ -88,6 +89,7 @@ class CheckPendingCnpjs extends Command
         // Verifica o código da atividade principal
         $atividadePrincipal = $data['atividade_principal'][0]['code'];
         if (in_array($atividadePrincipal, ['64.63-8-00', '64.62-0-00'])) {
+            $cnpj->razao_social = $data['nome'];
             $cnpj->status = 'reprovado';
             $cnpj->save();
             return;
@@ -95,6 +97,7 @@ class CheckPendingCnpjs extends Command
 
         $situacaoEspecial = $data['situacao_especial'];
         if($situacaoEspecial === 'RECUPERACAO JUDICIAL'){
+            $cnpj->razao_social = $data['nome'];
             $cnpj->status = 'reprovado';
             $cnpj->save();
             return;
@@ -104,18 +107,21 @@ class CheckPendingCnpjs extends Command
         if (isset($data['qsa'])) {
             foreach ($data['qsa'] as $socio) {
                 if (stripos($socio['qual'], 'empresa') !== false || stripos($socio['qual'], 'S/A') !== false || stripos($socio['qual'], 'LTDA') !== false) {
+                    $cnpj->razao_social = $data['nome'];
                     $cnpj->status = 'reprovado';
                     $cnpj->save();
                     return;
                 }
 
                 if (stripos($socio['nome'], 'estrangeiro') !== false) {
+                    $cnpj->razao_social = $data['nome'];
                     $cnpj->status = 'reprovado';
                     $cnpj->save();
                     return;
                 }
 
                 if (isset($socio['nome_rep_legal']) && !empty($socio['nome_rep_legal'])) {
+                    $cnpj->razao_social = $data['nome'];
                     $cnpj->status = 'reprovado';
                     $cnpj->save();
                     return;
@@ -123,12 +129,14 @@ class CheckPendingCnpjs extends Command
             }
         } else {
             Log::error('qsa not found for CNPJ: ' . $cnpj->cnpj);
+            $cnpj->razao_social = $data['nome'];
             $cnpj->status = 'reprovado';
             $cnpj->save();
             return;
         }
 
         // Se passar em todas as verificações, aprova o CNPJ
+        $cnpj->razao_social = $data['nome'];
         $cnpj->status = 'aprovado';
         $cnpj->save();
     }

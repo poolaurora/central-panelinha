@@ -8,23 +8,21 @@
     <div class="py-12 bg-gray-900">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-800 shadow-md sm:rounded-lg p-6">
-            <form action="{{ route('cnpj.import.excel') }}" method="POST" enctype="multipart/form-data" class="mb-6 flex flex-col items-center">
+            <form action="{{ route('cnpj.import.excel') }}" method="POST" class="mb-6 flex flex-col items-center bg-gray-800 p-6 rounded-lg shadow-lg">
                 @csrf
-                <label for="file_input" class="block text-sm font-medium text-gray-300 mb-2">
-                    Carregar arquivo Excel
+                <label for="textarea_input" class="block text-sm font-medium text-gray-300 mb-4">
+                    Insira a lista de CNPJ
                 </label>
                 <div class="relative w-full mb-4 flex justify-center">
-                    <input id="file_input" type="file" name="excel_file" accept=".xlsx, .xls" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                    <div class="bg-gray-700 border border-gray-600 rounded-lg p-3 flex items-center justify-center text-gray-300 w-1/4">
-                        <span class="text-sm">Selecione um arquivo</span>
-                    </div>
+                    <textarea id="textarea_input" name="cnpj_list" rows="10" class="w-full bg-gray-700 border border-gray-600 text-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" placeholder="Cole a lista de CNPJ aqui..."></textarea>
                 </div>
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300">
                     Carregar
                 </button>
+                
+                @livewire('cnpj-status')
+            </form>
 
-                @livewire('cnpj-status')           
-             </form>
   
 <div x-data="{ open: false }">
     <!-- Botão para abrir o modal -->

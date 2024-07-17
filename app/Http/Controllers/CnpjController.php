@@ -21,34 +21,36 @@ class CnpjController extends Controller
     }
 
     public function import(Request $request)
-    {
-        Log::info('Método import chamado.');
+{
+    // Valida a entrada do textarea
+    $request->validate([
+        'cnpj_list' => 'required',
+    ]);
 
-        // Valida o arquivo
-        $request->validate([
-            'excel_file' => 'required|file|mimes:xlsx,xls',
-        ]);
+    $cnpjList = $request->input('cnpj_list');
 
-        if ($request->hasFile('excel_file')) {
-            $file = $request->file('excel_file');
-            Log::info('Arquivo recebido: ' . $file->getClientOriginalName());
-            Log::info('Caminho temporário do arquivo: ' . $file->getPathname());
+    // Processa a lista de CNPJ
+    $cnpjArray = array_map('trim', explode("\n", $cnpjList));
 
-            try {
-                Excel::import(new CnpjImport, $file);
-                Log::info('Importação concluída com sucesso.');
-
-                return back()->with('success', 'CNPJs importados com sucesso.');
-            } catch (\Exception $e) {
-                Log::error('Erro ao importar arquivo Excel: ' . $e->getMessage());
-
-                return back()->with('error', 'Ocorreu um erro ao importar o arquivo Excel.');
+    try {
+        // Aqui você pode adicionar o código para processar cada CNPJ na lista
+        foreach ($cnpjArray as $cnpj) {
+            // Verifique se o CNPJ é válido
+            if (!empty($cnpj)) {
+                // Salvar no banco de dados
+                Cnpj::create(['cnpj' => $cnpj, 'status' => 'pendente']);
             }
-        } else {
-            Log::error('Nenhum arquivo foi recebido.');
-            return back()->with('error', 'Nenhum arquivo foi recebido.');
         }
+
+        return back()->with('success', 'CNPJs importados com sucesso.');
+    } catch (\Exception $e) {
+        // Log do erro com a mensagem de exceção
+        Log::error('Erro ao processar a lista de CNPJ: ' . $e->getMessage());
+        return back()->with('error', 'Ocorreu um erro ao processar a lista de CNPJ.');
     }
+}
+    
+
 
     public function clearCnpjs(Request $request)
     {
