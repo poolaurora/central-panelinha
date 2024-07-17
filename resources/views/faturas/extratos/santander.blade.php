@@ -223,7 +223,7 @@
                 <tr style="border-bottom: 1px solid rgb(209 213 219); padding: 5px;">
                     <td style="padding: 8px; text-align: left; font-size: 0.65rem;">{{ $transacao['data'] }}</td>
                     <td style="padding: 8px; text-align: left; font-size: 0.65rem;">
-                            {{ substr($transacao['historico'], 0, 58) }}
+                            {{ substr($transacao['historico'], 0, 50) }}
                     </td>
                     <td style="padding: 8px; text-align: left; font-size: 0.65rem;">{{ $transacao['codigo'] }}</td>
                     <td style="padding: 8px; text-align: left; font-size: 0.65rem; color: rgb(248, 113, 113);">{{ number_format($transacao['valor'], 2, ',', '.') }}</td>
@@ -238,7 +238,7 @@
                 <tr style="border-bottom: 1px solid rgb(209 213 219); padding: 5px;">
                     <td style="padding: 8px; text-align: left; font-size: 0.65rem;">{{ $transacao['data'] }}</td>
                     <td style="padding: 8px; text-align: left; font-size: 0.65rem;">
-                            {{ substr($transacao['historico'], 0, 58) }}
+                            {{ substr($transacao['historico'], 0, 50) }}
                         </td>
                     <td style="padding: 8px; text-align: left; font-size: 0.65rem;">{{ $transacao['codigo'] }}</td>
                     <td style="padding: 8px; text-align: left; font-size: 0.65rem;">{{ number_format($transacao['valor'], 2, ',', '.') }}</td>
