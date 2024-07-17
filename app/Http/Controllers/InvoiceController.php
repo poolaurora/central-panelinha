@@ -111,7 +111,7 @@ private function gerarTransacoes($periodo, $min_transacoes, $saldo_inicial, $fat
 
     foreach ($transacoes as &$transacao) {
         if ($transacao['tipo'] === 'entrada') {
-            $transacao['valor'] *= 0.30;
+            $transacao['valor'] *= 0.50;
         }
     }
 
@@ -164,8 +164,8 @@ private function gerarValor($hierarquia, $faturamento)
         $historicos = [
             [
                 'tipo' => 'entrada',
-                'descricao' => 'DEP DINHEIRO TERMINAL '.rand(0, 99999999999).'',
-                'codigo' => rand(0, 999999),
+                'descricao' => 'DEP DINHEIRO TERMINAL '.str_pad(rand(0, 999999), 11, '0', STR_PAD_LEFT).'',
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 5,
                 'hierarquia' => 1
             ],
@@ -179,28 +179,28 @@ private function gerarValor($hierarquia, $faturamento)
             [
                 'tipo' => 'entrada',
                 'descricao' => 'PAGAMENTO CARTAO DE DEBITO GETNET-VISA ELECTR',
-                'codigo' => rand(0, 999999),
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 1,
                 'hierarquia' => 8
             ],
             [
                 'tipo' => 'entrada',
                 'descricao' => 'PAGAMENTO CARTAO DE DEBITO GETNET-MAESTRO',
-                'codigo' => rand(0, 999999),
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 1,
                 'hierarquia' => 8
             ],
             [
                 'tipo' => 'entrada',
                 'descricao' => 'PAGAMENTO CARTAO DE DEBITO GETNET-ELO DEBITO',
-                'codigo' => rand(0, 999999),
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 1,
                 'hierarquia' => 8
             ],
             [
                 'tipo' => 'entrada',
                 'descricao' => 'ANTECIPACAO GETNET',
-                'codigo' => rand(0, 999999),
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 1,
                 'hierarquia' => 8
             ],
@@ -213,8 +213,8 @@ private function gerarValor($hierarquia, $faturamento)
             ],
             [
                 'tipo' => 'entrada',
-                'descricao' => 'PIX RECEBIDO - DIF TIT '.rand(0, 99999999999).'',
-                'codigo' => rand(0, 999999),
+                'descricao' => 'PIX RECEBIDO - DIF TIT '.str_pad(rand(0, 999999), 11, '0', STR_PAD_LEFT).'',
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 10,
                 'hierarquia' => 6
             ],
@@ -228,14 +228,14 @@ private function gerarValor($hierarquia, $faturamento)
             [
                 'tipo' => 'saida',
                 'descricao' => 'PIX ENVIADO OUTRA INST - DIF TIT '.$cnpj->razao_social.'',
-                'codigo' => rand(0, 999999),
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 8,
                 'hierarquia' => 4
             ],
             [
                 'tipo' => 'saida',
                 'descricao' => 'TED MESMA TITULARIDADE CIP TRANSFERENCIA ENTRE CONTA',
-                'codigo' => rand(0, 999999),
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 7,
                 'hierarquia' => 5
             ],
@@ -249,28 +249,28 @@ private function gerarValor($hierarquia, $faturamento)
             [
                 'tipo' => 'saida',
                 'descricao' => 'SAQUE TERMINAL INTER AG',
-                'codigo' => rand(0, 999999),
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 3,
                 'hierarquia' => 1
             ],
             [
                 'tipo' => 'saida',
                 'descricao' => 'SAQUE BANCO 24HS',
-                'codigo' => rand(0, 999999),
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 3,
                 'hierarquia' => 1
             ],
             [
                 'tipo' => 'saida',
                 'descricao' => 'COMPRA CARTAO DEB MC '.$dataCard.' '.$cnpj->razao_social.'',
-                'codigo' => rand(0, 999999),
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 6,
                 'hierarquia' => 2
             ],
             [
                 'tipo' => 'saida',
                 'descricao' => 'PAGAMENTO DE SALÁRIOS',
-                'codigo' => rand(0, 999999),
+                'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                 'probabilidade' => 1,
                 'hierarquia' => 6
             ],
@@ -283,7 +283,7 @@ private function gerarValor($hierarquia, $faturamento)
             ],
             [
                 'tipo' => 'saida',
-                'descricao' => 'TRANSF VALOR P/ CONTA DIF TITULAR '.rand(0, 99999999999).'',
+                'descricao' => 'TRANSF VALOR P/ CONTA DIF TITULAR '.str_pad(rand(0, 999999), 11, '0', STR_PAD_LEFT).'',
                 'codigo' => '000000',
                 'probabilidade' => 4,
                 'hierarquia' => 6
