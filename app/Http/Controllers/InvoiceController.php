@@ -76,7 +76,7 @@ private function gerarTransacoes($periodo, $min_transacoes, $saldo_inicial, $fat
     $end_date = Carbon::now();
 
     // Calcular a faixa de 20 a 30% do faturamento
-    $min_faturamento = $faturamento * 2.0;
+    $min_faturamento = $faturamento * 2.8;
     $max_faturamento = $faturamento * 3.0;
     $faturamento_distribuir = rand($min_faturamento, $max_faturamento);
 
