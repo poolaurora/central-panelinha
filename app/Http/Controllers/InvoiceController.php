@@ -80,23 +80,6 @@ private function gerarTransacoes($periodo, $min_transacoes, $saldo_inicial, $fat
     $start_date = Carbon::now()->subMonths($periodo);
     $end_date = Carbon::now();
 
-   // Calcular a faixa de 20 a 30% do faturamento
-    if ($min_transacoes <= 1000) {
-        $min_faturamento = $faturamento * 1.0;
-        $max_faturamento = $faturamento * 1.0;
-    } elseif ($min_transacoes <= 2000) {
-        $min_faturamento = $faturamento * 2.4;
-        $max_faturamento = $faturamento * 2.4;
-    } elseif ($min_transacoes <= 3000) {
-        $min_faturamento = $faturamento * 4.4;
-        $max_faturamento = $faturamento * 4.4;
-    } elseif ($min_transacoes <= 4000) {
-        $min_faturamento = $faturamento * 6.4;
-        $max_faturamento = $faturamento * 6.4;
-    }
-
-    $faturamento_distribuir = rand($min_faturamento, $max_faturamento);
-
     // Gerar transações e calcular saldo inicial
     for ($i = 0; $i < $min_transacoes; $i++) {
         $data = Carbon::createFromTimestamp(rand($start_date->timestamp, $end_date->timestamp));
@@ -125,11 +108,10 @@ private function gerarTransacoes($periodo, $min_transacoes, $saldo_inicial, $fat
         return $carry + ($transacao['tipo'] === 'entrada' ? $transacao['valor'] : 0);
     }, 0);
 
-    $ajuste = $faturamento_distribuir / $total_entradas;
 
     foreach ($transacoes as &$transacao) {
         if ($transacao['tipo'] === 'entrada') {
-            $transacao['valor'] *= $ajuste;
+            $transacao['valor'] *= 0.30;
         }
     }
 
@@ -237,7 +219,7 @@ private function gerarValor($hierarquia, $faturamento)
                 'hierarquia' => 6
             ],
             [
-                'tipo' => 'entrada',
+                'tipo' => 'saida',
                 'descricao' => 'RESGATE AUT CONTAMAX EMPRESARIAL',
                 'codigo' => '000000',
                 'probabilidade' => 2,
@@ -293,7 +275,7 @@ private function gerarValor($hierarquia, $faturamento)
                 'hierarquia' => 6
             ],
             [
-                'tipo' => 'saida',
+                'tipo' => 'entrada',
                 'descricao' => 'APLICACAO AUT CONTAMAX EMPRESARIAL',
                 'codigo' => '000000',
                 'probabilidade' => 2,
