@@ -52,15 +52,19 @@ class InvoiceController extends Controller
     // Geração da data e hora atual
     $data_hora = Carbon::now()->format('d/m/Y \à\s H:i');
 
+    $random_digit = rand(0, 999999999);
+
+    $file_name = $random_digit.'-EXTRATO-2024.pdf';
+
     $resultado = $this->gerarTransacoes($periodo, $min_transacoes, $saldo_inicial, $faturamento);
 
     $transacoes = $resultado['transacoes'];
     $saldo_final = $resultado['saldo_final'];
     $ultima_data = $resultado['ultima_data'];
 
-    $pdf = Pdf::loadView('faturas.extratos.santander', compact('transacoes', 'agencia', 'saldo_inicial', 'saldo_final', 'saldo_investimento', 'razao', 'start_date', 'end_date', 'data_hora', 'ultima_data'));
+    $pdf = Pdf::loadView('faturas.extratos.santander', compact('transacoes', 'agencia', 'saldo_inicial', 'saldo_final', 'saldo_investimento', 'razao', 'start_date', 'end_date', 'data_hora', 'ultima_data', 'file_name'));
     
-    return $pdf->stream('document.pdf');
+    return $pdf->stream($file_name);
 }
     
 

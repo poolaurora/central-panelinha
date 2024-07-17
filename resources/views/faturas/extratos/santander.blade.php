@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>522392301-EXTRATOS-SANTANDER-2024.pdf</title>
+    <title>{{ $file_name }}</title>
     <style>
         /* Inclua o CSS compilado do Tailwind */
         {!! file_get_contents(public_path('css/tailwind.css')) !!}
