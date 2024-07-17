@@ -210,7 +210,7 @@
                 </tr>
             <tbody>
                 <tr style="border-bottom: 1px solid rgb(209 213 219); padding: 5px;">
-                    <td style="padding: 8px; text-align: left; font-size: 0.65rem;">04/06/2021</td>
+                    <td style="padding: 8px; text-align: left; font-size: 0.65rem;">{{ start_date }}</td>
                     <td style="padding: 8px; text-align: left; font-size: 0.65rem;">SALDO ANTERIOR</td>
                     <td style="padding: 8px; text-align: left; font-size: 0.65rem;"></td>
                     <td style="padding: 8px; text-align: left; font-size: 0.65rem;"></td>
