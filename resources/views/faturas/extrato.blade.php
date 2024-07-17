@@ -32,7 +32,7 @@
                             <select name="periodo" id="periodo" class="mt-1 block w-full bg-gray-900 rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" required>
                                 <option value="" disabled selected>Selecione o período</option>
                                 <option value="1">1 mês</option>
-                                <option value="2">3 meses</option>
+                                <option value="3">3 meses</option>
                                 <option value="6">6 meses</option>
                                 <option value="12">1 ano</option>
                             </select>
