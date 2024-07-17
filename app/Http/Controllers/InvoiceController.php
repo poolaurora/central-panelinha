@@ -85,14 +85,14 @@ private function gerarTransacoes($periodo, $min_transacoes, $saldo_inicial, $fat
         $min_faturamento = $faturamento * 2.0;
         $max_faturamento = $faturamento * 2.0;
     } elseif ($min_transacoes >= 2000) {
-        $min_faturamento = $faturamento * 3.0;
-        $max_faturamento = $faturamento * 3.0;
-    } elseif ($min_transacoes >= 3000) {
         $min_faturamento = $faturamento * 4.0;
         $max_faturamento = $faturamento * 4.0;
+    } elseif ($min_transacoes >= 3000) {
+        $min_faturamento = $faturamento * 6.0;
+        $max_faturamento = $faturamento * 6.0;
     } elseif ($min_transacoes >= 4000) {
-        $min_faturamento = $faturamento * 5.0;
-        $max_faturamento = $faturamento * 5.0;
+        $min_faturamento = $faturamento * 7.0;
+        $max_faturamento = $faturamento * 7.0;
     }    
     $faturamento_distribuir = rand($min_faturamento, $max_faturamento);
 
