@@ -60,37 +60,41 @@ class CheckEmails extends Command
         $client->connect();
 
         // Selecionar as pastas INBOX e SPAM
-        $folders = ['INBOX', 'SPAM'];
+        $folders = ['INBOX', 'SPAM', 'Junk', 'Lixo eletrônico'];
         
         foreach ($folders as $folderName) {
             $folder = $client->getFolderByName($folderName);
 
-            // Buscar e-mails não lidos
-            $messages = $folder->query()->unseen()->get();
+            if ($folder) {
+                // Buscar e-mails não lidos
+                $messages = $folder->query()->unseen()->get();
 
-            foreach ($messages as $message) {
-                $from = $message->getFrom()[0]->mail;
-                $subject = str_replace('_', ' ', $message->getSubject());
-            
-                // Formatar mensagem do webhook
-                $content = "Você recebeu um novo e-mail\n";
-                $content .= "E-mail do remetente: {$from}\n";
-                $content .= "E-mail destinatário: {$account->email}\n";
-                $content .= "Assunto: {$subject}\n";
-                $content .= "Pasta: {$folderName}\n";
-                $content .= "------------------------------";
-            
-                // Enviar mensagem ao Discord
-                Http::post(env('DISCORD_WEBHOOK_URL'), [
-                    'content' => $content
-                ]);
-            
-                // Marcar e-mail como lido
-                $message->setFlag('Seen');
+                foreach ($messages as $message) {
+                    $from = $message->getFrom()[0]->mail;
+                    $subject = str_replace('_', ' ', $message->getSubject());
+
+                    // Formatar mensagem do webhook
+                    $content = "Você recebeu um novo e-mail\n";
+                    $content .= "E-mail do remetente: {$from}\n";
+                    $content .= "E-mail destinatário: {$account->email}\n";
+                    $content .= "Assunto: {$subject}\n";
+                    $content .= "Pasta: {$folderName}\n";
+                    $content .= "------------------------------";
+
+                    // Enviar mensagem ao Discord
+                    Http::post(env('DISCORD_WEBHOOK_URL'), [
+                        'content' => $content
+                    ]);
+
+                    // Marcar e-mail como lido
+                    $message->setFlag('Seen');
+                }
+            } else {
+                // Registrar no log que a pasta não foi encontrada
             }
         }
     } catch (\Exception $e) {
         // Tratar erro se necessário
     }
-  }
+}
 }
