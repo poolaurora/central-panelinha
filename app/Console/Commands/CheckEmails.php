@@ -44,23 +44,26 @@ class CheckEmails extends Command
     }
 
     private function checkEmailAccount($account)
-    {
-        $client = Client::make([
-            'host'          => $account->imap_host,
-            'port'          => $account->imap_port,
-            'encryption'    => $account->imap_encryption,
-            'validate_cert' => $account->imap_validate_cert,
-            'username'      => $account->email,
-            'password'      => $account->password,
-            'protocol'      => 'imap'
-        ]);
+{
+    $client = Client::make([
+        'host'          => $account->imap_host,
+        'port'          => $account->imap_port,
+        'encryption'    => $account->imap_encryption,
+        'validate_cert' => $account->imap_validate_cert,
+        'username'      => $account->email,
+        'password'      => $account->password,
+        'protocol'      => 'imap'
+    ]);
 
-        try {
-            // Conectar ao servidor IMAP
-            $client->connect();
+    try {
+        // Conectar ao servidor IMAP
+        $client->connect();
 
-            // Selecionar a pasta INBOX
-            $folder = $client->getFolderByName('INBOX');
+        // Selecionar as pastas INBOX e SPAM
+        $folders = ['INBOX', 'SPAM'];
+        
+        foreach ($folders as $folderName) {
+            $folder = $client->getFolderByName($folderName);
 
             // Buscar e-mails não lidos
             $messages = $folder->query()->unseen()->get();
@@ -74,6 +77,7 @@ class CheckEmails extends Command
                 $content .= "E-mail do remetente: {$from}\n";
                 $content .= "E-mail destinatário: {$account->email}\n";
                 $content .= "Assunto: {$subject}\n";
+                $content .= "Pasta: {$folderName}\n";
                 $content .= "------------------------------";
             
                 // Enviar mensagem ao Discord
@@ -83,9 +87,10 @@ class CheckEmails extends Command
             
                 // Marcar e-mail como lido
                 $message->setFlag('Seen');
-            }            
-        } catch (\Exception $e) {
-            // Tratar erro se necessário
+            }
         }
+    } catch (\Exception $e) {
+        // Tratar erro se necessário
     }
+  }
 }
