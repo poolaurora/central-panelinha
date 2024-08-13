@@ -45,7 +45,25 @@ return array(
          * Times-Roman, Times-Bold, Times-BoldItalic, Times-Italic,
          * Symbol, ZapfDingbats.
          */
-        "font_dir" => storage_path('fonts'), // advised by dompdf (https://github.com/dompdf/dompdf/pull/782)
+        'font_dir' => base_path('public/fonts/'), // advised by dompdf (https://github.com/dompdf/dompdf/pull/782)
+
+        'fonts' => [
+            'ItauTextApp' => [
+                'R' => 'ItauTextApp.ttf',    // Regular
+                'B' => 'ItauTextAppBold.ttf', // Bold
+                'L' => 'ItauTextAppLight.ttf', // Light
+                'BX' => 'ItauTextAppXBold.ttf' // Bold Italic
+            ],
+            'Helvica' => [
+                'R' => 'Helvetica.woff',    // Regular
+                'B' => 'Helvetica-Bold.woff', // Bold
+                'L' => 'helvetica-light.woff', // Light
+                'BR' => 'helvetica-rounded-bold.woff', // Bold Rounded
+                'O' => 'Helvetica-Oblique.woff', // Oblique
+                'C' => 'helvetica-compressed.woff', // Compressed
+                'BO' => 'Helvetica-BoldOblique.woff', // Bold Oblique
+            ]
+        ],
 
         /**
          * The location of the DOMPDF font cache directory
@@ -55,7 +73,7 @@ return array(
          *
          * Note: This directory must exist and be writable by the webserver process.
          */
-        "font_cache" => storage_path('fonts'),
+        'font_cache' => storage_path('fonts/'),
 
         /**
          * The location of a temporary directory.

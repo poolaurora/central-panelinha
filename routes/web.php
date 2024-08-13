@@ -7,6 +7,8 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\EmailAccountController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\CnpjController;
+use App\Http\Controllers\CrawlerController;
+use App\Http\Controllers\SicoobExtratoController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -35,8 +37,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dashboard/email/destroy/{id}', [EmailAccountController::class, 'destroy'])->name('email.destroy');
 
     Route::get('/dashboard/payments', [PaymentsController::class, 'view'])->name('payments.view');
+    Route::get('/dashboard/payments/store', [PaymentsController::class, 'storeView'])->name('payments.store');
+    Route::get('/dashboard/payments/index', [PaymentsController::class, 'index'])->name('payments.index');
+    Route::get('/dashboard/payments/show/{empresa}', [PaymentsController::class, 'show'])->name('payments.show');
+    Route::get('/dashboard/payments/subconta', [PaymentsController::class, 'index_subconta'])->name('payments.index.subconta');
+
+
+
+    
+    /*
+    
     Route::post('/dashboard/payments/create', [PaymentsController::class, 'generatePaymentLink'])->name('payments.create');
     Route::post('/dashboard/company/store', [PaymentsController::class, 'store'])->name('payments.store');
+
+    */
 
     Route::get('/dashboard/cnpj', [CnpjController::class, 'index'])->name('cnpj.index');
     Route::get('/dashboard/cnpj/consulta', [CnpjController::class, 'view'])->name('cnpj.consulta.cnpj');
@@ -47,7 +61,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/pdf', [InvoiceController::class, 'index'])->name('pdf.index');
     Route::get('/dashboard/pdf/extrato', [InvoiceController::class, 'indexExtrato'])->name('pdf.extrato');
     Route::post('/dashboard/pdf/extrato/gerar/santander', [InvoiceController::class, 'generate'])->name('pdf.santander.gerar');
-
+    Route::post('/dashboard/pdf/extrato/gerar/sicoob', [SicoobExtratoController::class, 'generate'])->name('pdf.sicoob.gerar');
+    Route::get('/dashboard/pdf/itau', [InvoiceController::class, 'itau'])->name('pdf.itau');
 
 
 });

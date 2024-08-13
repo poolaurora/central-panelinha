@@ -16,6 +16,16 @@ class InvoiceController extends Controller
         return view('faturas.index');
     }
 
+    public function itau(){
+        $pdf = Pdf::loadView('faturas.extratos.sicoob');
+    
+        // Adicione cabeçalho e rodapé
+        $pdf->setOption('header-html', view('faturas.partials.header')->render());
+        $pdf->setOption('footer-html', view('faturas.partials.footer')->render());
+    
+        return $pdf->stream('sicoob.pdf');
+    }    
+
     public function indexExtrato(){
 
         return view('faturas.extrato');
@@ -34,7 +44,7 @@ class InvoiceController extends Controller
         'faturamento' => 'required',
         'transacoes' => 'required|integer|min:1',
         'saldo' => 'required',
-        'investimento' => 'required',  // Adiciona a validação para o saldo de investimento
+        'investimento' => 'required', 
     ]);
 
     $periodo = $request->input('periodo');
