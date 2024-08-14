@@ -43,8 +43,10 @@ class SicoobExtratoController extends Controller
         $data_hora = Carbon::now()->format('d/m/Y \à\s H:i');
     
         $random_digit = rand(0, 999999999);
-    
-        $file_name = $random_digit.'-sicoob-'.$start_date.'.pdf';
+        
+        $date_file = Carbon::now()->format('Y-d-m-H-i');
+
+        $file_name = $random_digit.'-sicoob-'.$date_file.'.pdf';
     
         $resultado = $this->gerarTransacoes($periodo, $min_transacoes, $saldo_inicial, $faturamento);
     
