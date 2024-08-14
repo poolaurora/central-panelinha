@@ -177,29 +177,53 @@ class SicoobExtratoController extends Controller
                             htmlspecialchars('PIX REC.OUTRA IF MT') . '<br>' .
                             htmlspecialchars('Recebimento Pix') . '<br>' .
                             htmlspecialchars($cnpj->razao_social) . '<br>' .
-                            htmlspecialchars($this->formatarCnpj($cnpj->cnpj)) . '<br>' .
+                            htmlspecialchars($this->formatarCnpj($cnpj->cnpj)) .
                             htmlspecialchars('DOC.: Pix') .
                         '</td>',
                     'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                     'probabilidade' => 5,
-                    'hierarquia' => 7
+                    'hierarquia' => 8
                 ],
                 [
                     'tipo' => 'entrada',
                     'descricao' => '<td style="">' .
                             htmlspecialchars('CRÉD.LIQ.COBRANÇA') . '<br>' .
-                            htmlspecialchars('DOC.: ' . str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT)) . '<br>' . 
+                            htmlspecialchars('DOC.: ' . str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT)) . 
                             '</td>',
                     'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                     'probabilidade' => 5,
-                    'hierarquia' => 7
+                    'hierarquia' => 8
                 ],
+                [
+                    'tipo' => 'entrada',
+                    'descricao' => '<td style="">' .
+                            htmlspecialchars('PIX REC.OUTRA IF MT') . '<br>' .
+                            htmlspecialchars('Recebimento Pix') . '<br>' .
+                            htmlspecialchars($cnpj->razao_social) . '<br>' .
+                            htmlspecialchars($this->formatarCnpj($cnpj->cnpj)) . '<br>' .
+                            htmlspecialchars('DOC.: Pix') .
+                        '</td>',
+                    'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
+                    'probabilidade' => 5,
+                    'hierarquia' => 8
+                ],
+                [
+                    'tipo' => 'entrada',
+                    'descricao' => '<td style="">' .
+                            htmlspecialchars('CRÉD.LIQ.COBRANÇA') . '<br>' .
+                            htmlspecialchars('DOC.: ' . str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT)) .
+                            '</td>',
+                    'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
+                    'probabilidade' => 5,
+                    'hierarquia' => 8
+                ],
+                
                 [
                     'tipo' => 'saida',
                     'descricao' => '<td style="">' .
                         htmlspecialchars('COMP MASTER MAESTRO', ENT_QUOTES, 'UTF-8') . '<br>' .
                         htmlspecialchars($cnpj->razao_social) . '<br>' .
-                        'DOC.: ' . str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT) . '<br>' .
+                        'DOC.: ' . str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT) .
                         '</td>',
                     'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                     'probabilidade' => 5,
@@ -209,7 +233,7 @@ class SicoobExtratoController extends Controller
                     'tipo' => 'saida',
                     'descricao' => '<td style="">' .
                         htmlspecialchars('DÉB.CONV.DEM.EMPRES', ENT_QUOTES, 'UTF-8') . '<br>' .
-                        'DOC.: MASTERCARD <br>' .
+                        'DOC.: MASTERCARD' .
                         '</td>',
                     'codigo' => str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT),
                     'probabilidade' => 5,
@@ -219,7 +243,7 @@ class SicoobExtratoController extends Controller
                     'tipo' => 'saida',
                     'descricao' => '<td style="">' .
                         htmlspecialchars('PIX.EMIT.OUT IF-MSM', ENT_QUOTES, 'UTF-8') . '<br>' .
-                        'DOC.: PIX <br>' .
+                        'DOC.: PIX' .
                         '</td>',
                     'codigo' => str_pad(rand(0, 999999), 3, '0', STR_PAD_LEFT),
                     'probabilidade' => 5,
@@ -230,7 +254,7 @@ class SicoobExtratoController extends Controller
                     'descricao' => '<td style="">' .
                         htmlspecialchars('DEB.TR.CT.DIF.TIT', ENT_QUOTES, 'UTF-8') . '<br>' .
                         'FAV.: '.$cnpj->razao_social.'<br>'.
-                        'DOC.: ' . str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT) . '<br>' .
+                        'DOC.: ' . str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT) .
                         '</td>',
                     'codigo' => str_pad(rand(0, 999999), 3, '0', STR_PAD_LEFT),
                     'probabilidade' => 6,
