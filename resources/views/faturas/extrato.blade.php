@@ -88,8 +88,8 @@
                             <input type="number" name="transacoes" id="transacoes" class="mt-1 block w-full bg-gray-900 rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" x-bind:required="banco === 'sicoob'">
                         </div>
                         <div class="mb-6">
-                            <label for="investimento" class="block text-sm font-medium text-gray-300">Saldo Em Investimento</label>
-                            <input type="text" name="investimento" id="investimento" class="mt-1 block w-full bg-gray-900 rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" x-model="investimento" x-on:input="investimento = formatCurrency($event.target.value)" x-bind:required="banco === 'sicoob'">
+                            <label for="cheque" class="block text-sm font-medium text-gray-300">Saldo Em Cheque Especial</label>
+                            <input type="text" name="cheque" id="cheque" class="mt-1 block w-full bg-gray-900 rounded-md border-gray-700 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50 sm:text-sm" x-model="investimento" x-on:input="investimento = formatCurrency($event.target.value)" x-bind:required="banco === 'sicoob'">
                         </div>
                         <div class="mb-6">
                             <label for="saldo" class="block text-sm font-medium text-gray-300">Saldo Inicial em Conta</label>

@@ -232,21 +232,25 @@
             <br>
             <span style="font-weight: bold;">PLATAFORMA DE SERVIÇOS FINANCEIROS DO SICOOB - SISBR</span>
         </div>
-
-        <div class="text-xs" style="display: block; padding: 45px 40px 0px 40px; text-align: center; margin: 0 auto;">
-            <span style="font-weight: normal; margin-right: 120px">{{ now()->format('d/m/Y') }}</span>
-            <span style="font-weight: bold; margin-left 220px;  margin-right: 120px">EXTRATO CONTA CORRENTE</span>
-            <span style="font-weight: normal;">{{ now()->format('H:i:s') }}</span>
-            <br>
+   <div style="width: 550px; margin: 0 auto;">    
+    <div style="border-bottom: 3px solid black; border-top: 3px solid black; width: 100%;">
+        <div class="text-xs" style="display: block; text-align: center;">
+            <span style="float: left; font-weight: normal;">{{ now()->format('d/m/Y') }}</span>
+            <span style="font-weight: bold;">EXTRATO CONTA CORRENTE</span>
+            <span style="float: right; font-weight: normal;">{{ now()->format('H:i:s') }}</span>
+            <div style="clear: both;"></div>
         </div>
-        <div class="text-xs" style="display: block; padding: 0px 40px 0px 87.5px; text-align: left; margin: 0 auto;">
+
+        <div class="text-xs" style="display: block; text-align: left; margin: 0 auto;">
                 <span style="font-weight: bold;">COOP.: <span style="font-weight: normal; text-transform: uppercase;">{{ $agencia }} / {{ $cooperativa }}</span></span>
                 <br>
                 <span style="font-weight: bold;">CONTA: <span style="font-weight: normal; text-transform: uppercase;">{{ $randomNumber }} / {{ $razao }}</span></span>
                 <br>
                 <span style="font-weight: bold;">PERÍODO: <span style="font-weight: normal;">{{ $start_date }} - {{ $end_date }}</span></span>
         </div>
-        <div style="display: block; max-width: 525px; width: 100%; text-align: center; margin: 0 auto; margin-top: 15px;" class="text-xs">
+    </div>   
+    </div>
+        <div style="display: block; max-width: 550px; width: 100%; text-align: center; margin: 0 auto; margin-top: 15px;" class="text-xs">
         <span style="font-weight: bold;">HISTÓRICO DE MOVIMENTAÇÃO</span>
         <table style="width: 100%; border-collapse: collapse; margin-top: 5px;">
                 <tr>
@@ -303,8 +307,9 @@
         </table>
     </div>
    
-
-    <div style="display: block; max-width: 525px; width: 100%; text-align: center; margin: 0 auto; margin-top: 15px;" class="text-xs">
+<div style="width: 550px; margin: 0 auto;">    
+<div style="border-bottom: 3px solid black; border-top: 3px solid black; width: 100%;">
+    <div style="display: block; max-width: 550px; width: 100%; text-align: center; margin: 0 auto;" class="text-xs">
         <span style="font-weight: bold;">RESUMO</span>
         <table style="width: 100%; border-collapse: collapse; margin-top: 5px;">
             <tbody>
@@ -313,76 +318,35 @@
                     <td style="color: blue; text-align: right;">{{ number_format($saldo_final, 2, ',', '.') }}C</td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;">LIMITE CHEQUE ESPECIAL(+):</td>
-                    <td style="color: blue; text-align: right;">0,00C</td>
+                    <td style="text-align: left;">LIMITE CHEQUE ESP. EMPRESARIAL PLUS (+):</td>
+                    <td style="color: blue; text-align: right;">{{ number_format($cheque_especial, 2, ',', '.') }}C</td>
                 </tr>
                 <tr>
                     <td style="text-align: left;">SALDO DISPONÍVEL(=):</td>
-                    <td style="color: blue; text-align: right;">{{ number_format($saldo_final, 2, ',', '.') }}C</td>
+                    <td style="color: blue; text-align: right;">{{ number_format($saldo_final + $cheque_especial, 2, ',', '.') }}C</td>
                 </tr>
                 <tr>
                     <td style="text-align: left;">SALDO BLOQ.C.CORRENTE: </td>
                     <td style="color: blue; text-align: right;">0,00*</td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;">VENCTO CHEQUE ESPECIAL:</td>
-                    <td></td>
+                    <td style="text-align: left;">VENCIMENTO CHEQUE ESP. EMPRESARIAL PLUS:</td>
+                    <td style="text-align: right;">{{ \Carbon\Carbon::createFromFormat('d/m/Y', $start_date)->subMonth()->format('d/m/Y') }}</td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;">TAXA CHEQUE ESPECIAL(a.m.):</td>
-                    <td style="text-align: right;">7,00%</td>
-                </tr>
-                <tr>
-                    <td style="text-align: left;">PREVISÃO CPMF:</td>
-                    <td style="color: red; text-align: right;">0,00D</td>
-                </tr>
-                <tr>
-                    <td style="text-align: left;">PREVISÃO IOF:</td>
-                    <td style="color: red; text-align: right;">0,00D</td>
-                </tr>
-                <tr>
-                    <td style="text-align: left;">PREVISÃO ENCARGOS:</td>
-                    <td style="color: red; text-align: right;">0,00D</td>
-                </tr>
-                <tr>
-                    <td style="text-align: left;">PREVISÃO TARIFAS:</td>
-                    <td style="color: red; text-align: right;">25,00D</td>
+                    <td style="text-align: left;">TAXA CHEQUE ESP. EMPRESARIAL PLUS (a.m.):</td>
+                    <td style="text-align: right;">1,99%</td>
                 </tr>
             </tbody>
         </table>
+        </div>
     </div>
-   
-    
-    <div style="display: block; max-width: 525px; width: 100%; text-align: center; margin: 0 auto; margin-top: 15px;" class="text-xs">
-        <span style="font-weight: bold;">LANÇAMENTOS FUTUROS</span>
-        <table style="width: 100%; border-collapse: collapse; margin-top: 5px;">
-                <tr>
-                    <th style="font-weight: bold; text-align: left;">DATA</th>
-                    <th style="font-weight: bold; text-align: left;">HISTÓRICO</th>
-                    <th style="font-weight: bold; text-align: right;">VALOR</th>
-                </tr>
-            @foreach($debitos_futuros as $debito)
-                <tr>
-                    <td style="vertical-align: top;">{{ \Carbon\Carbon::createFromFormat('d/m/Y', $debito['data'])->format('d/m') }}</td>
-                    {!! \Illuminate\Support\Str::limit($debito['descricao'], 60) !!}
-                    <td style="text-align: right; color: blue; vertical-align: top;">
-                        {{ number_format($debito['valor'], 2, ',', '.') }}C
-                    </td>
-                </tr>
-            @endforeach
-        </table>
     </div>
-
-    <div style="display: block; max-width: 525px; width: 100%; text-align: left; margin: 0 auto; margin-top: 15px;" class="text-xs">
+    <div style="display: block; max-width: 550px; width: 100%; text-align: left; margin: 0 auto; margin-top: 5px;" class="text-xs">
         <div style="text-align: center; width: 100%; background-color: #f4f4f4; font-weight: bold;">
             <span style="display: block; width: 100%;">000 EXTRATOS EMITIDOS ATÉ 27/09/2023</span>
         </div>
-        <span class="text-xs" style="display: block; width: 100%;">CAPITAL PREMIADO: A CADA 200 REAIS INVESTIDOS NO SEU CAPITAL, VOCÊ
-            RECEBE UM NÚMERO DA SORTE PARA CONCORRER A 10.000 PONTOS COOPERA
-            TODOS OS DIAS E A 43 MOTOS E 17 CARROS! CONFIRA COM NOSSA EQUIPE!
-            CONTRATE O SEGURO TRANSACOES E GANHE PONTOS COOPERA PARA
-            TROCAR POR PRODUTOS INCRIVEIS! PROTEJA SUAS TRANSACOES DE PIX E TED
-            E ATE O SEU BOLSO. CONTRATE PELO APP SICOOB!</span>
+        <span class="text-xs" style="display: block; width: 100%;">SAC: <span style="font-style: italic;">0800 724 4420</span></span>
         <span class="text-xs" style="display: block; width: 100%;">OUVIDORIA SICOOB: <span style="font-style: italic;">0800 725 0996</span></span>
     </div>
 </body>

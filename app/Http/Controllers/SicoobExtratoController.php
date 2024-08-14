@@ -23,19 +23,18 @@ class SicoobExtratoController extends Controller
             'faturamento' => 'required',
             'transacoes' => 'required|integer|min:1',
             'saldo' => 'required',
-            'investimento' => 'required', 
+            'cheque' => 'required', 
         ]);
     
         $periodo = $request->input('periodo');
         $min_transacoes = $request->input('transacoes');
         $saldo_inicial = $this->convertToNumber($request->input('saldo'));
         $faturamento = $this->convertToNumber($request->input('faturamento'));
-        $saldo_investimento = $this->convertToNumber($request->input('investimento')); // Converte o saldo de investimento
+        $cheque_especial = $this->convertToNumber($request->input('cheque')); // Converte o saldo de investimento
         $agencia = $request->input('agencia');
         $cooperativa = $request->input('cooperativa');
         $razao = $request->input('razao_social');
-        $debitos_futuros = $this->getFutureDebts($faturamento, 5);
-    
+
         // Geração do período no formato "dd/mm/yyyy a dd/mm/yyyy"
         $start_date = Carbon::now()->subMonths($periodo)->format('d/m/Y');
         $end_date = Carbon::now()->format('d/m/Y');
@@ -53,7 +52,7 @@ class SicoobExtratoController extends Controller
         $saldo_final = $resultado['saldo_final'];
         $ultima_data = $resultado['ultima_data'];
     
-        $pdf = Pdf::loadView('faturas.extratos.sicoob', compact('debitos_futuros','cooperativa','transacoes', 'agencia', 'saldo_inicial', 'saldo_final', 'saldo_investimento', 'razao', 'start_date', 'end_date', 'data_hora', 'ultima_data', 'file_name'));
+        $pdf = Pdf::loadView('faturas.extratos.sicoob', compact('cooperativa','transacoes', 'agencia', 'saldo_inicial', 'saldo_final', 'cheque_especial', 'razao', 'start_date', 'end_date', 'data_hora', 'ultima_data', 'file_name'));
         
         return $pdf->stream($file_name);
     }
@@ -277,32 +276,6 @@ class SicoobExtratoController extends Controller
         }
 
 
-        private function getFutureDebts($faturamento, $numero_debitos = 5)
-        {
-            $future_debts = [];
-            $today = Carbon::now();
-
-            for ($i = 0; $i < $numero_debitos; $i++) {
-                // Gerar uma data futura aleatória dentro dos próximos 12 meses
-                $future_date = $today->copy()->addDays(rand(1, 365))->format('d/m/Y');
-                $cnpj = Cnpj::where('status', 'reprovado')->inRandomOrder()->first();
-
-                // Gerar valores aleatórios para os débitos, baseados em frações do faturamento
-                $valor = $this->gerarValor(rand(1, 10), $faturamento);
-
-                // Gerar o histórico da transação
-                $historico = $this->gerarHistorico($future_date, $cnpj);
-
-                // Adicionar o valor e tipo de transação ao histórico
-                $historico['valor'] = $valor; // Valor negativo indicando débito
-                $historico['tipo'] = 'entrada';  // Tipo de transação "saida" para débitos
-                $historico['data'] = $future_date;
-
-                $future_debts[] = $historico;
-            }
-
-            return $future_debts;
-        }
 
 
 }
